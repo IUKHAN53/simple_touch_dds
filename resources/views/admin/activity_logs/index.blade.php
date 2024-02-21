@@ -19,7 +19,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600" id="activity_table">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                         <tr>
                             <th scope="col"

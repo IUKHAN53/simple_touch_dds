@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\ActivityLog;
 use App\Models\Document;
+use App\Models\PostOfficeBox;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -14,9 +15,9 @@ class FileUploader extends Component
 
     public $uploaded_file;
     public $name;
-    public $amount;
+    public $amount = 0;
     public $post_office_box_id;
-    public $page_number;
+    public $page_number = 0;
     public $is_paid;
     public $logs;
 
@@ -44,16 +45,9 @@ class FileUploader extends Component
 
     public function render()
     {
-        if (auth()->user()->postOfficeBoxes->count() === 0) {
-            $pobs = auth()->user()->postOfficeBoxes()->create([
-                'user_id' => auth()->id(),
-                'is_active' => true,
-                'box_type' => 'both'
-            ]);
-        }
         return view('livewire.file-uploader')->with([
             'userFiles' => auth()->user()->documents,
-            'pobs' => auth()->user()->postOfficeBoxes()->pluck('box_type', 'id')
+            'pobs' => $this->getPOBs()
         ]);
     }
 
@@ -108,5 +102,41 @@ class FileUploader extends Component
     {
         $this->logs = ActivityLog::where('document_id', $document->id)->get();
     }
+
+    private function getPOBs()
+    {
+        if(auth()->user()->role == 1) {
+            return PostOfficeBox::all()->pluck('box_type', 'id');
+        }else{
+            if(!auth()->user()->postOfficeBoxes()->exists()) {
+                PostOfficeBox::query()->create([
+                    'box_type' => auth()->user()->name,
+                    'user_id' => auth()->id()
+                ]);
+            }
+            return auth()->user()->postOfficeBoxes()->pluck('box_type', 'id');
+        }
+    }
+
+    public function removeUploadedFile()
+    {
+        $this->cleanupOldUploads();
+        $this->reset('uploaded_file');
+    }
+
+    public function updatedPageNumber($value)
+    {
+        if ($value < 0) {
+            $this->page_number = 0;
+        }
+    }
+
+    public function updatedAmount($value)
+    {
+        if ($value < 0) {
+            $this->amount = 0;
+        }
+    }
+
 
 }

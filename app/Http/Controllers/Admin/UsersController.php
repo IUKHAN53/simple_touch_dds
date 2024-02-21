@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
+use App\Imports\UsersImport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
 
     public function index()
     {
-        $users = User::all();
+        $users = User::query()->where('role', 2)->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -93,4 +96,26 @@ class UsersController extends Controller
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx',
+        ]);
+
+        Excel::import(new UsersImport, request()->file('file'));
+
+        return redirect()->back()->with('success', 'Users imported successfully.');
+    }
+
+    public function downloadSample()
+    {
+        return response()->download(public_path('users_sample.xlsx'));
+    }
+
+    public function exportUsers()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
 }

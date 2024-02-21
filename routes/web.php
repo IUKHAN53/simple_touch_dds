@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
 
 Route::middleware(['auth','is_admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
+    Route::post('/import-users', [UsersController::class, 'importExcel'])->name('import.users');
+    Route::get('/download-sample', [UsersController::class, 'downloadSample'])->name('download.users-sample');
+    Route::get('/export-users', [UsersController::class, 'exportUsers'])->name('export.users');
     Route::get('documents', [\App\Http\Controllers\Admin\DocumentsController::class, 'index'])->name('documents.index');
     Route::delete('documents/{id}', [\App\Http\Controllers\Admin\DocumentsController::class, 'delete'])->name('documents.destroy');
     Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogsController::class, 'index'])->name('activity-logs.index');

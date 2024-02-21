@@ -20,35 +20,28 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600 w-100" id="documents_table">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                         <tr>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300">
                                 Project Name
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300">
                                 Type
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300">
                                 Size
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300">
                                 Paid
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300">
                                 Amount
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300">
                                 Activity Logs
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <th class="text-gray-900 dark:text-gray-300 no-sort">
                                 Action
                             </th>
                         </tr>
