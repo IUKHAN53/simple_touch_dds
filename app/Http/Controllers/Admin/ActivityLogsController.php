@@ -17,6 +17,7 @@ class ActivityLogsController extends Controller
 
     public function delete($id)
     {
+
         ActivityLog::findOrFail($id)->delete();
         return redirect()->route('admin.activity-logs.index')->with('success', 'Activity log deleted successfully.');
     }

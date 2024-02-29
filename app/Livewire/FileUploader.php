@@ -83,6 +83,8 @@ class FileUploader extends Component
         $activityLog->post_office_box_id = $document->post_office_box_id;
         $activityLog->ip_address = request()->ip();
         $activityLog->save();
+
+        $this->reset('uploaded_file', 'name', 'amount', 'post_office_box_id', 'page_number', 'is_paid');
     }
 
     public function downloadDocument(Document $document)

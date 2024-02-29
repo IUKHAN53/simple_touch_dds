@@ -27,9 +27,6 @@
                                 Project Name
                             </th>
                             <th class="text-gray-900 dark:text-gray-300">
-                                Type
-                            </th>
-                            <th class="text-gray-900 dark:text-gray-300">
                                 Size
                             </th>
                             <th class="text-gray-900 dark:text-gray-300">
@@ -51,9 +48,6 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
                                     {{$document->name}}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                    {{$document->type}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     {{$document->size}}
