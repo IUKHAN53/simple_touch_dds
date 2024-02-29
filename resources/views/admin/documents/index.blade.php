@@ -23,22 +23,22 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600 w-100" id="documents_table">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                         <tr>
-                            <th class="text-gray-900 dark:text-gray-300">
+                            <th class="px-6 py-4 text-gray-900 dark:text-gray-300">
                                 Project Name
                             </th>
-                            <th class="text-gray-900 dark:text-gray-300">
+                            <th class="px-6 py-4 text-gray-900 dark:text-gray-300">
                                 Size
                             </th>
-                            <th class="text-gray-900 dark:text-gray-300">
+                            <th class="px-6 py-4 text-gray-900 dark:text-gray-300">
                                 Paid
                             </th>
-                            <th class="text-gray-900 dark:text-gray-300">
+                            <th class="px-6 py-4 text-gray-900 dark:text-gray-300">
                                 Amount
                             </th>
-                            <th class="text-gray-900 dark:text-gray-300">
+                            <th class="px-6 py-4 text-gray-900 dark:text-gray-300">
                                 Activity Logs
                             </th>
-                            <th class="text-gray-900 dark:text-gray-300 no-sort">
+                            <th class="px-6 py-4 text-gray-900 dark:text-gray-300 no-sort">
                                 Action
                             </th>
                         </tr>

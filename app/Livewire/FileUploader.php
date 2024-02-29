@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\ActivityLog;
 use App\Models\Document;
 use App\Models\PostOfficeBox;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -45,8 +46,15 @@ class FileUploader extends Component
 
     public function render()
     {
+        $poBox = auth()->user()->postOfficeBoxes()->first();
+        if (auth()->user()->role == User::ROLE_USER) {
+            $poBox = auth()->user()->postOfficeBoxes()->first();
+            $files = $poBox->documents()->latest()->get();
+        }else{
+            $files = Document::latest()->get();
+        }
         return view('livewire.file-uploader')->with([
-            'userFiles' => auth()->user()->documents()->latest()->get(),
+            'userFiles' => $files,
             'pobs' => $this->getPOBs()
         ]);
     }
