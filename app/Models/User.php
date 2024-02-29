@@ -49,6 +49,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public static function booting()
+    {
+        static::created(function ($user) {
+            PostOfficeBox::query()->create([
+                'box_type' => $user->name,
+                'user_id' => $user->id
+            ]);
+        });
+    }
+
     public function postOfficeBoxes()
     {
         return $this->hasMany(PostOfficeBox::class);

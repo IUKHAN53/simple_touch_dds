@@ -108,12 +108,6 @@ class FileUploader extends Component
         if(auth()->user()->role == 1) {
             return PostOfficeBox::all()->pluck('box_type', 'id');
         }else{
-            if(!auth()->user()->postOfficeBoxes()->exists()) {
-                PostOfficeBox::query()->create([
-                    'box_type' => auth()->user()->name,
-                    'user_id' => auth()->id()
-                ]);
-            }
             return auth()->user()->postOfficeBoxes()->pluck('box_type', 'id');
         }
     }
