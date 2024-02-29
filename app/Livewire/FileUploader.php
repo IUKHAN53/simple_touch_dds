@@ -46,7 +46,7 @@ class FileUploader extends Component
     public function render()
     {
         return view('livewire.file-uploader')->with([
-            'userFiles' => auth()->user()->documents,
+            'userFiles' => auth()->user()->documents()->latest()->get(),
             'pobs' => $this->getPOBs()
         ]);
     }
