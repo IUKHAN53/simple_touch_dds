@@ -16,18 +16,24 @@ class FileUploader extends Component
 
     public $uploaded_file;
     public $name;
-    public $amount = 0;
+    public $amount;
     public $post_office_box_id;
-    public $page_number = 0;
+    public $page_number;
     public $is_paid;
     public $logs;
 
-    protected $rules = [
+    protected $admin_rules = [
         'name' => 'required',
-        'amount' => 'required',
+        'amount' => 'required|numeric',
         'post_office_box_id' => 'required',
-        'page_number' => 'required',
+        'page_number' => 'required|numeric',
         'is_paid' => 'required',
+        'uploaded_file' => 'required|file|max:10240'
+    ];
+
+    protected $user_rules = [
+        'name' => 'required',
+        'page_number' => 'required|numeric',
         'uploaded_file' => 'required|file|max:10240'
     ];
 
@@ -50,7 +56,7 @@ class FileUploader extends Component
         if (auth()->user()->role == User::ROLE_USER) {
             $poBox = auth()->user()->postOfficeBoxes()->first();
             $files = $poBox->documents()->latest()->get();
-        }else{
+        } else {
             $files = Document::latest()->get();
         }
         return view('livewire.file-uploader')->with([
@@ -61,8 +67,12 @@ class FileUploader extends Component
 
     public function saveDocument()
     {
-        $this->validate();
-
+        if (auth()->user()->role == User::ROLE_USER) {
+            $this->post_office_box_id = auth()->user()->postOfficeBoxes()->first()->id;
+            $this->validate($this->admin_rules);
+        }else{
+            $this->validate($this->user_rules);
+        }
         $originalName = $this->uploaded_file->getClientOriginalName();
         $basename = pathinfo($originalName, PATHINFO_FILENAME);
         $extension = $this->uploaded_file->getClientOriginalExtension();
@@ -70,10 +80,12 @@ class FileUploader extends Component
 
         $document = new Document();
         $document->name = $this->name;
+        $document->file_name =  $this->uploaded_file->getClientOriginalName();
         $document->path = $this->uploaded_file->storeAs('documents', $uniqueName);
         $document->type = $this->uploaded_file->getMimeType();
         $document->size = $this->uploaded_file->getSize();
-        $document->amount = $this->amount;
+        $document->amount = $this->amount ?? 0;
+        $document->is_paid = $this->is_paid ?? null;
         $document->page_number = $this->page_number;
         $document->post_office_box_id = $this->post_office_box_id;
         $document->user_id = auth()->id();
@@ -115,10 +127,8 @@ class FileUploader extends Component
 
     private function getPOBs()
     {
-        if(auth()->user()->role == 1) {
+        if (auth()->user()->role == User::ROLE_ADMIN) {
             return PostOfficeBox::all()->pluck('box_type', 'id');
-        }else{
-            return auth()->user()->postOfficeBoxes()->pluck('box_type', 'id');
         }
     }
 

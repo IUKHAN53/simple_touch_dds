@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get('dashboard', \App\Livewire\Home::class)->middleware(['auth'])->name('dashboard');
 Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
+Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogsController::class, 'index'])->name('admin.activity-logs.index');
+Route::get('activity-logs/{id}', [\App\Http\Controllers\Admin\ActivityLogsController::class, 'download'])->name('admin.activity-logs.download');
 
 Route::middleware(['auth','is_admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
@@ -28,7 +30,6 @@ Route::middleware(['auth','is_admin'])->prefix('admin')->as('admin.')->group(fun
     Route::get('/export-users', [UsersController::class, 'exportUsers'])->name('export.users');
     Route::get('documents', [\App\Http\Controllers\Admin\DocumentsController::class, 'index'])->name('documents.index');
     Route::delete('documents/{id}', [\App\Http\Controllers\Admin\DocumentsController::class, 'delete'])->name('documents.destroy');
-    Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogsController::class, 'index'])->name('activity-logs.index');
     Route::delete('delete-activity-logs/{id}', [\App\Http\Controllers\Admin\ActivityLogsController::class, 'delete'])->name('activity-logs.destroy');
 });
 

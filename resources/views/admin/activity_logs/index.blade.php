@@ -8,7 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="p-6 bg-white dark:bg-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-600">
+                <div
+                    class="p-6 bg-white dark:bg-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-600">
                     @if (session('success'))
                         <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
                             {{ session('success') }}
@@ -56,14 +57,21 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     {{$log->created_at}}                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <form class="inline" action="{{ route('admin.activity-logs.destroy', $log->id) }}"
-                                          method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500"
-                                                onclick="return confirm('Are you sure?')">Delete
-                                        </button>
-                                    </form>
+                                    @if(auth()->user()->isAdmin())
+                                        <form class="inline"
+                                              action="{{ route('admin.activity-logs.destroy', $log->id) }}"
+                                              method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500"
+                                                    onclick="return confirm('Are you sure?')">Delete
+                                            </button>
+                                        </form>
+                                    @endif
+                                    <a href="{{ route('admin.activity-logs.download', $log->id) }}"
+                                       class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500">Download
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

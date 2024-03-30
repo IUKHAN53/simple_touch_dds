@@ -39,4 +39,9 @@ class Document extends Model
     {
         return $this->hasMany(ActivityLog::class);
     }
+
+    public function isDownloadedOnce()
+    {
+        return $this->activityLogs()->where('activity_type', 'download')->exists();
+    }
 }
