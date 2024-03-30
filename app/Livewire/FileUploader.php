@@ -69,9 +69,9 @@ class FileUploader extends Component
     {
         if (auth()->user()->role == User::ROLE_USER) {
             $this->post_office_box_id = auth()->user()->postOfficeBoxes()->first()->id;
-            $this->validate($this->admin_rules);
-        }else{
             $this->validate($this->user_rules);
+        }else{
+            $this->validate($this->admin_rules);
         }
         $originalName = $this->uploaded_file->getClientOriginalName();
         $basename = pathinfo($originalName, PATHINFO_FILENAME);
@@ -85,7 +85,7 @@ class FileUploader extends Component
         $document->type = $this->uploaded_file->getMimeType();
         $document->size = $this->uploaded_file->getSize();
         $document->amount = $this->amount ?? 0;
-        $document->is_paid = $this->is_paid ?? null;
+        $document->is_paid = $this->is_paid ?? 0;
         $document->page_number = $this->page_number;
         $document->post_office_box_id = $this->post_office_box_id;
         $document->user_id = auth()->id();
