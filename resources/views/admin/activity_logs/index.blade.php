@@ -57,6 +57,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     {{$log->created_at}}                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="{{ route('admin.activity-logs.download', $log->id) }}"
+                                       class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500 mr-2">Download
+                                    </a>
                                     @if(auth()->user()->isAdmin())
                                         <form class="inline"
                                               action="{{ route('admin.activity-logs.destroy', $log->id) }}"
@@ -69,9 +72,6 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <a href="{{ route('admin.activity-logs.download', $log->id) }}"
-                                       class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500">Download
-                                    </a>
                                 </td>
                             </tr>
                         @endforeach
