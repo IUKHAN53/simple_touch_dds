@@ -95,11 +95,11 @@
         </div>
     </div>
 
-    @if($userFiles->count() > 0)
+    @if(!auth()->user()->isAdmin() &&  $userFiles->count() > 0)
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg mt-4">
             <div class="flex flex-wrap">
                 @foreach($userFiles as $file)
-                    @if(auth()->user()->isAdmin() || !$file->isDownloadedOnce())
+                    @if(!$file->isDownloadedOnce())
                         <div class="p-4 border rounded mt-2 bg-gray-400 w-full flex flex-row justify-between">
                             <div class="float-start flex flex-row">
                                 <div>
