@@ -20,5 +20,11 @@ class DocumentsController extends Controller
         return redirect()->route('admin.documents.index')->with('success', 'Document deleted successfully');
     }
 
+    public function deleteAll()
+    {
+        Document::truncate();
+        return redirect()->route('admin.documents.index')->with('success', 'All documents deleted successfully');
+    }
+
 
 }

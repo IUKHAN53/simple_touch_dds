@@ -43,7 +43,7 @@ class UsersController extends Controller
     /**
      * Display the specified user.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,7 +55,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified user.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -87,7 +87,7 @@ class UsersController extends Controller
     /**
      * Remove the specified user from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -116,6 +116,12 @@ class UsersController extends Controller
     public function exportUsers()
     {
         return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    public function deleteAll()
+    {
+        User::query()->where('role', User::ROLE_USER)->delete();
+        return redirect()->route('admin.users.index')->with('success', 'All users deleted successfully.');
     }
 
 }

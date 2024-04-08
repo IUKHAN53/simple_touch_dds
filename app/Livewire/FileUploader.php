@@ -28,13 +28,13 @@ class FileUploader extends Component
         'post_office_box_id' => 'required',
         'page_number' => 'required|numeric',
         'is_paid' => 'required',
-        'uploaded_file' => 'required|file|max:10240'
+        'uploaded_file' => 'required|file|max:512000'
     ];
 
     protected $user_rules = [
         'name' => 'required',
         'page_number' => 'required|numeric',
-        'uploaded_file' => 'required|file|max:10240'
+        'uploaded_file' => 'required|file|max:512000'
     ];
 
     public function finishUpload($name, $tmpPath)
@@ -70,7 +70,7 @@ class FileUploader extends Component
         if (auth()->user()->role == User::ROLE_USER) {
             $this->post_office_box_id = auth()->user()->postOfficeBoxes()->first()->id;
             $this->validate($this->user_rules);
-        }else{
+        } else {
             $this->validate($this->admin_rules);
         }
         $originalName = $this->uploaded_file->getClientOriginalName();
@@ -80,7 +80,7 @@ class FileUploader extends Component
 
         $document = new Document();
         $document->name = $this->name;
-        $document->file_name =  $this->uploaded_file->getClientOriginalName();
+        $document->file_name = $this->uploaded_file->getClientOriginalName();
         $document->path = $this->uploaded_file->storeAs('documents', $uniqueName);
         $document->type = $this->uploaded_file->getMimeType();
         $document->size = $this->uploaded_file->getSize();

@@ -18,9 +18,19 @@
                            class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500">
                             Import Users
                         </a> |
-                        <a href="{{ route('admin.export.users') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500">
+                        <a href="{{ route('admin.export.users') }}"
+                           class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500">
                             Export Users
-                        </a>
+                        </a> |
+                        <form class="inline" action="{{ route('admin.users.delete-all') }}"
+                              method="POST">
+                            @csrf
+                            <button type="submit"
+                                    class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500"
+                                    onclick="return confirm('All the users will be deleted. Are you sure?')">Delete All
+                                Users
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div
@@ -53,7 +63,7 @@
                         </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                        @forelse ($users as $user)
+                        @foreach ($users as $user)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
                                     {{ $user->name }}
@@ -75,14 +85,7 @@
                                     </form>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300"
-                                    colspan="3">
-                                    No users found.
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -94,7 +97,7 @@
               style="padding: 10px">
             @csrf
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                {{ __('First Row Name, 2nd Row Email, 3rd Row Password') }}
+                {{ __('First column Name, 2nd column Email, 3rd column Password') }}
             </h2>
             <input type="file" name="file" required
                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">

@@ -24,7 +24,7 @@
                         <input class="text-sm cursor-pointer w-36 hidden" @change="handleFileSelect" type="file"/>
                         <div
                             class="text bg-indigo-600 text-white rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500">
-                            Select File or Drop Here
+                            Select File or Drop Here (Max Size 500MB)
                         </div>
                     </label>
                 </div>
@@ -74,6 +74,9 @@
                     </div>
                 </div>
             </template>
+            @error('uploaded_file')
+            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+            @enderror
         </div>
         <div class="">
             @if ($uploaded_file)
