@@ -111,16 +111,16 @@
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Activity
+                                    Time
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     User
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Description
+                                    Activity
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Time
+                                    Description
                                 </th>
                             </tr>
                             </thead>
@@ -128,24 +128,15 @@
                             @if($document->activityLogs)
                                 @foreach($document->activityLogs as $log)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{$log->activity_type}}
-                                        </th>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{$log->user->name}}
-                                        </th>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <span>
-                                                {{$log->description}}
-                                            </span>
-                                        </th>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{$log->created_at}}
-                                        </th>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            {{$log->created_at}}                                </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            {{$log->user->name}}                                </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                                            {{ucfirst($log->activity_type)}}ed                               </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            {{optional($log->document)->name}}
+                                        </td>
                                     </tr>
                                 @endforeach
                             @else
